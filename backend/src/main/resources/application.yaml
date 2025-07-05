@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: emiteai-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pessoa_db?createDatabaseIfNotExists=true
+    username: postgres
+    password: postgres
+
+  jpa:
+    show-sql: true
