@@ -1,0 +1,16 @@
+### Cadastrar pessoa
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{
+  "nome": "Thiago",
+  "cpf": "542.817.540-08",
+  "endereco": {
+    "numero": "100",
+    "complemento": "Teste",
+    "cep": "12.222-963",
+    "bairro": "Bairro das flores",
+    "municipio": "Gaspar",
+    "estado": "SC"
+  }
+}
