@@ -1,6 +1,8 @@
 package thiagoespindula00.emiteai.backend.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -42,4 +44,10 @@ public class PessoaController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping
+    public ResponseEntity<Page<PessoaDetalhesDto>> listar(Pageable pageable) {
+        return ResponseEntity.ok(service.listar(pageable));
+    }
+
 }

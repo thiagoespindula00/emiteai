@@ -3,14 +3,14 @@ POST http://localhost:8080/pessoas
 Content-Type: application/json
 
 {
-  "nome": "Thiago",
-  "cpf": "542.817.540-08",
+  "nome": "Márcia",
+  "cpf": "154.698.090-30",
   "endereco": {
-    "numero": "100",
+    "numero": "400",
     "complemento": "Teste",
     "cep": "12.222-963",
-    "bairro": "Bairro das flores",
-    "municipio": "Gaspar",
+    "bairro": "Bairro",
+    "municipio": "Florianópolis",
     "estado": "SC"
   }
 }
@@ -34,3 +34,6 @@ Content-Type: application/json
 
 ### Deletar pessoa
 DELETE http://localhost:8080/pessoas/1
+
+### Listar todas as pessoas paginado
+GET http://localhost:8080/pessoas
