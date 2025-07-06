@@ -2,6 +2,7 @@ import Pessoa from "../../types/Pessoa";
 import {useEffect, useState} from "react";
 import api from "../../api/api";
 import {
+    Button,
     IconButton,
     Paper,
     Table,
@@ -14,9 +15,11 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import ModalPessoa from "../../components/ModalPessoa";
 
 const PessoaPage: React.FC = () => {
     const [pessoas, setPessoas] = useState<Pessoa[]>([])
+    const [open, setOpen] = useState(false)
 
     useEffect(() => {
         carregaPessoas()
@@ -27,7 +30,23 @@ const PessoaPage: React.FC = () => {
         setPessoas(data.content)
     }
 
+    const abreModal = () => {
+        setOpen(true)
+    }
+
+    const fechaModal = () => {
+        setOpen(false)
+        carregaPessoas();
+    }
+
+    const cadastrarPessoa = () => {
+        abreModal()
+    }
+
     return (
+        <>
+            <Button onClick={cadastrarPessoa} variant="contained">Cadastrar Pessoa</Button>
+            <ModalPessoa open={open} onClose={fechaModal}/>
         <TableContainer component={Paper}>
             <Table>
                 <TableHead>
@@ -45,7 +64,7 @@ const PessoaPage: React.FC = () => {
                 </TableHead>
                 <TableBody>
                     {pessoas.map(pessoa =>
-                    <TableRow>
+                    <TableRow key={pessoa.id}>
                         <TableCell>{pessoa.cpf}</TableCell>
                         <TableCell>{pessoa.nome}</TableCell>
                         <TableCell>{pessoa.endereco.cep}</TableCell>
@@ -71,6 +90,7 @@ const PessoaPage: React.FC = () => {
                 </TableBody>
             </Table>
         </TableContainer>
+        </>
     )
 }
 
