@@ -1,5 +1,6 @@
 package thiagoespindula00.emiteai.backend.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +31,15 @@ public class PessoaService {
 
         Pessoa pessoaCadastrada = repository.save(Pessoa.fromDto(pessoaRequestDto));
         return PessoaDetalhesDto.fromEntity(pessoaCadastrada);
+    }
+
+    @Transactional
+    public void atualizar(Long id, PessoaRequestDto pessoaRequestDto) {
+        Pessoa pessoa = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        if (!pessoa.getCpf().equals(pessoaRequestDto.cpf())) {
+            validaCpfDuplicado(pessoaRequestDto.cpf());
+        }
+        pessoa.setCampos(pessoaRequestDto);
+        repository.save(pessoa);
     }
 }

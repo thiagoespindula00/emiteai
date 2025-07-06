@@ -2,10 +2,7 @@ package thiagoespindula00.emiteai.backend.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import thiagoespindula00.emiteai.backend.dto.PessoaDetalhesDto;
 import thiagoespindula00.emiteai.backend.dto.PessoaRequestDto;
@@ -30,5 +27,12 @@ public class PessoaController {
                 .toUri();
 
         return ResponseEntity.created(location).body(pessoaCadastrada);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody @Valid PessoaRequestDto requestDto) {
+        service.atualizar(id, requestDto);
+
+        return ResponseEntity.noContent().build();
     }
 }

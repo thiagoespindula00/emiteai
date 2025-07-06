@@ -1,5 +1,6 @@
 package thiagoespindula00.emiteai.backend.trata_erros;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,5 +25,10 @@ public class TratadorDeErros {
         });
 
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<?> trataErroEntidadeNaoEncontrada(EntityNotFoundException exception) {
+        return ResponseEntity.notFound().build();
     }
 }

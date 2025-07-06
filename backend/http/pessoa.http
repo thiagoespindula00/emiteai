@@ -14,3 +14,20 @@ Content-Type: application/json
     "estado": "SC"
   }
 }
+
+### Atualizar pessoa
+PUT http://localhost:8080/pessoas/1
+Content-Type: application/json
+
+{
+  "nome": "Thiago Cesar",
+  "cpf": "781.415.490-14",
+  "endereco": {
+    "numero": "104",
+    "complemento": "Complemento do endereço",
+    "cep": "12.222-444",
+    "bairro": "Bairro do endereço",
+    "municipio": "Blumenau",
+    "estado": "SC"
+  }
+}
