@@ -31,3 +31,6 @@ Content-Type: application/json
     "estado": "SC"
   }
 }
+
+### Deletar pessoa
+DELETE http://localhost:8080/pessoas/1

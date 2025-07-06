@@ -35,4 +35,11 @@ public class PessoaController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> remover(@PathVariable Long id) {
+        service.deletar(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }

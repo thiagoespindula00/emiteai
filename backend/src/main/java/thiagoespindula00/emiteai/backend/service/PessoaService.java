@@ -42,4 +42,13 @@ public class PessoaService {
         pessoa.setCampos(pessoaRequestDto);
         repository.save(pessoa);
     }
+
+    @Transactional
+    public void deletar(Long id) {
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException();
+        }
+
+        repository.deleteById(id);
+    }
 }
