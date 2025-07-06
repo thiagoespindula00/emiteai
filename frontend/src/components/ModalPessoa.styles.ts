@@ -8,7 +8,6 @@ export const StyledBox = styled(Box)`
     transform: translate(-50%, -50%);
     background: white;
     padding: 20px;
-    box-shadow: 24px;
     border-radius: 8px;
 
     display: flex;

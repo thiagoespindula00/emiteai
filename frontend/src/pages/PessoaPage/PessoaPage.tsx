@@ -50,6 +50,12 @@ const PessoaPage: React.FC = () => {
         abreModal()
     }
 
+    const deletarPessoa = (id: number) => {
+        api.delete(`/pessoas/${id}`).then(() => {
+            carregaPessoas()
+        });
+    }
+
     return (
         <>
             <Button onClick={cadastrarPessoa} variant="contained">Cadastrar Pessoa</Button>
@@ -86,7 +92,7 @@ const PessoaPage: React.FC = () => {
                                     <EditIcon />
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title="Deletar">
+                            <Tooltip title="Deletar" onClick={() => {deletarPessoa(pessoa.id)}}>
                                 <IconButton color="error" size="small">
                                     <DeleteIcon />
                                 </IconButton>
