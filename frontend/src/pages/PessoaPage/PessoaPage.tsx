@@ -20,6 +20,7 @@ import ModalPessoa from "../../components/ModalPessoa";
 const PessoaPage: React.FC = () => {
     const [pessoas, setPessoas] = useState<Pessoa[]>([])
     const [open, setOpen] = useState(false)
+    const [pessoaModal, setPessoaModal] = useState<Pessoa | null>(null)
 
     useEffect(() => {
         carregaPessoas()
@@ -40,13 +41,19 @@ const PessoaPage: React.FC = () => {
     }
 
     const cadastrarPessoa = () => {
+        setPessoaModal(null)
+        abreModal()
+    }
+
+    const editarPessoa = (pessoa: Pessoa) => {
+        setPessoaModal(pessoa)
         abreModal()
     }
 
     return (
         <>
             <Button onClick={cadastrarPessoa} variant="contained">Cadastrar Pessoa</Button>
-            <ModalPessoa open={open} onClose={fechaModal}/>
+            <ModalPessoa open={open} onClose={fechaModal} pessoaEditar={pessoaModal}/>
         <TableContainer component={Paper}>
             <Table>
                 <TableHead>
@@ -74,7 +81,7 @@ const PessoaPage: React.FC = () => {
                         <TableCell>{pessoa.endereco.complemento}</TableCell>
                         <TableCell>{pessoa.endereco.estado}</TableCell>
                         <TableCell align="center">
-                            <Tooltip title="Editar">
+                            <Tooltip title="Editar" onClick={() => {editarPessoa(pessoa)}}>
                                 <IconButton color="secondary" size="small">
                                     <EditIcon />
                                 </IconButton>

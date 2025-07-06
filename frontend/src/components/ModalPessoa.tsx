@@ -1,5 +1,5 @@
 import {ModalPessoaProps} from "./ModalPessoaProps";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Pessoa from "../types/Pessoa";
 import {Button, Modal, TextField, Typography} from "@mui/material";
 import {StyledBox, StyledContent, StyledFooter, StyledHeader} from "./ModalPessoa.styles";
@@ -20,13 +20,30 @@ const vazio: Pessoa = {
     },
 };
 
-const ModalPessoa: React.FC<ModalPessoaProps> = ({open, onClose}) => {
+const ModalPessoa: React.FC<ModalPessoaProps> = ({open, onClose, pessoaEditar}) => {
     const [pessoaForm, setPessoaForm] = useState<Pessoa>(vazio)
 
+    useEffect(() => {
+        if (open) {
+            setPessoaForm(pessoaEditar ?? vazio)
+        }
+    }, [pessoaEditar, open]);
+
     const salvarPessoa = async () => {
-        const resposta = await api.post("/pessoas", pessoaForm)
-        toast.success("Pessoa cadastrada")
-        onClose()
+        try {
+            if (pessoaEditar == null) {
+                const resposta = await api.post("/pessoas", pessoaForm)
+                toast.success("Pessoa cadastrada")
+            }
+            else {
+                const resposta = await api.put(`/pessoas/${pessoaForm.id}`, pessoaForm)
+                toast.success("Pessoa alterada")
+            }
+
+            onClose()
+        } catch (erro: any) {
+            toast.error(erro.response.data.mensagem)
+        }
     }
 
     return (

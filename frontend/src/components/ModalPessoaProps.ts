@@ -1,4 +1,7 @@
+import Pessoa from "../types/Pessoa";
+
 export interface ModalPessoaProps {
     open: boolean,
-    onClose: () => void
+    onClose: () => void,
+    pessoaEditar: Pessoa | null
 }
