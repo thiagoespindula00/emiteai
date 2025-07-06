@@ -40,3 +40,6 @@ GET http://localhost:8080/pessoas
 
 ### Detalhar pessoa
 GET http://localhost:8080/pessoas/3
+
+### Criar csv
+POST http://localhost:8080/pessoas/csv

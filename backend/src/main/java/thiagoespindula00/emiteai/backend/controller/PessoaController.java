@@ -1,11 +1,13 @@
 package thiagoespindula00.emiteai.backend.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import thiagoespindula00.emiteai.backend.configuration.RabbitConfiguration;
 import thiagoespindula00.emiteai.backend.dto.PessoaDetalhesDto;
 import thiagoespindula00.emiteai.backend.dto.PessoaRequestDto;
 import thiagoespindula00.emiteai.backend.service.PessoaService;
@@ -14,9 +16,11 @@ import thiagoespindula00.emiteai.backend.service.PessoaService;
 @RequestMapping("/pessoas")
 public class PessoaController {
     private final PessoaService service;
+    private final RabbitTemplate rabbitTemplate;
 
-    public PessoaController(PessoaService service) {
+    public PessoaController(PessoaService service, RabbitTemplate rabbitTemplate) {
         this.service = service;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @PostMapping
@@ -53,5 +57,12 @@ public class PessoaController {
     @GetMapping("/{id}")
     public ResponseEntity<PessoaDetalhesDto> detalhar(@PathVariable Long id) {
         return ResponseEntity.ok(service.detalhar(id));
+    }
+
+    @PostMapping("/csv")
+    public ResponseEntity<?> gerarCsv() {
+        rabbitTemplate.convertAndSend(RabbitConfiguration.CSV_QUEUE, "Frontend solicitou geração de csv");
+
+        return ResponseEntity.accepted().build();
     }
 }

@@ -12,6 +12,9 @@ import thiagoespindula00.emiteai.backend.model.Pessoa;
 import thiagoespindula00.emiteai.backend.repository.PessoaRepository;
 import thiagoespindula00.emiteai.backend.trata_erros.ValidacaoException;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PessoaService {
 
@@ -64,5 +67,12 @@ public class PessoaService {
         Pessoa pessoa = repository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         return PessoaDetalhesDto.fromEntity(pessoa);
+    }
+
+    public List<PessoaDetalhesDto> listarTodos() {
+        return repository.findAll()
+                .stream()
+                .map(PessoaDetalhesDto::fromEntity)
+                .collect(Collectors.toList());
     }
 }

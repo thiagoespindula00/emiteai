@@ -16,6 +16,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ModalPessoa from "../../components/ModalPessoa";
+import {toast} from "react-toastify";
 
 const PessoaPage: React.FC = () => {
     const [pessoas, setPessoas] = useState<Pessoa[]>([])
@@ -50,15 +51,32 @@ const PessoaPage: React.FC = () => {
         abreModal()
     }
 
-    const deletarPessoa = (id: number) => {
-        api.delete(`/pessoas/${id}`).then(() => {
+    const deletarPessoa = async (id: number) => {
+        try {
+            const resposta = await api.delete(`/pessoas/${id}`);
+            toast.success("Pessoa excluida")
             carregaPessoas()
-        });
+        }
+        catch (erro: any) {
+            toast.error(erro.response.data.mensagem)
+        }
+    }
+
+    const gerarcsv = async () => {
+        try {
+            const resposta = await api.post("/pessoas/csv")
+            toast.success("CSV está sendo gerado")
+        }
+        catch (erro: any) {
+            toast.error(erro.response.data.mensagem)
+        }
+
     }
 
     return (
         <>
             <Button onClick={cadastrarPessoa} variant="contained">Cadastrar Pessoa</Button>
+            <Button style={{marginLeft: 15}} onClick={gerarcsv} variant="contained">Gerar csv</Button>
             <ModalPessoa open={open} onClose={fechaModal} pessoaEditar={pessoaModal}/>
         <TableContainer component={Paper}>
             <Table>
