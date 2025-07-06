@@ -50,4 +50,8 @@ public class PessoaController {
         return ResponseEntity.ok(service.listar(pageable));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PessoaDetalhesDto> detalhar(@PathVariable Long id) {
+        return ResponseEntity.ok(service.detalhar(id));
+    }
 }

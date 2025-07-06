@@ -37,3 +37,6 @@ DELETE http://localhost:8080/pessoas/1
 
 ### Listar todas as pessoas paginado
 GET http://localhost:8080/pessoas
+
+### Detalhar pessoa
+GET http://localhost:8080/pessoas/3

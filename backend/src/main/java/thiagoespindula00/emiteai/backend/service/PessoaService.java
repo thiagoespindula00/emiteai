@@ -59,4 +59,10 @@ public class PessoaService {
                 .findAll(pageable)
                 .map(PessoaDetalhesDto::fromEntity);
     }
+
+    public PessoaDetalhesDto detalhar(Long id) {
+        Pessoa pessoa = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        return PessoaDetalhesDto.fromEntity(pessoa);
+    }
 }
