@@ -19,3 +19,21 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST_NAME: postgresql
+      RABBITMQ_HOST_NAME: rabbitmq
+      CSV_DIRETORIO: /app/data
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    environment:
+      BACKEND_HOST_NAME: backend
